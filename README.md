@@ -1,6 +1,8 @@
 # WebMapDocker - Web Mapping with MapServer and Docker.
 Containers for running a web mapping solution on docker using MapServer components.
 
+## Requirements
+Docker with docker-compose. Follow the instructions here for an Ubuntu Server installation: https://docs.docker.com/engine/install/ubuntu/
 
 ## Running
 git clone https://github.com/mauriciodev/webmapdocker.git \
