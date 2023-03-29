@@ -35,6 +35,7 @@ END
     NAME "circle"
     TYPE ellipse
     POINTS 1 1 END
+    FILLED True
   END # Symbol
 
 LAYER
