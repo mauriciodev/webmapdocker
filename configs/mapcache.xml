@@ -1,0 +1,1099 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapcache>
+   <metadata>
+      <title>BDGEx</title>
+      <abstract>Banco de Dados Geográficos do Exército</abstract>
+
+      <!-- url
+
+           uncomment and modify this if you need to provide another base url for
+           getCapabilities requests (for the OnlineResource tags). You should use 
+           this if there's a proxy between the client and the mod-mapcache service
+           and you want the capabilities document to point to the correct endpoints.
+      
+      <url>http://mysuperhost/proxy/to/mapcache</url>
+      -->
+   </metadata>
+
+   <!--
+        a grid represents the layout of tiles: srs, extent, resolutions, and tile size
+   -->
+
+   <grid name="bdgex">
+            <metadata>
+               <title>BDGEx's Scale oriented GRID</title>
+	       <!--<WellKnownScaleSet>urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible</WellKnownScaleSet>-->
+            </metadata>
+            <extent>-125, -55, 0, 15</extent>
+            <srs>EPSG:4326</srs>
+	    <!--<srsalias>EPSG:900913</srsalias>-->
+            <units>dd</units>
+            <size>256 256</size>
+            <resolutions>0.07936954220105226, 0.06349563376084183, 0.047621725320631365, 0.031747816880420915, 0.015873908440210457, 0.007936954220105229, 0.0031747816880420914, 0.0015873908440210457, 0.0007936954220105229, 0.00031747816880420905, 0.0002476329716672831, 0.00015873908440210453, 7.936954220105226e-05, 4.7621725320631366e-05, 3.1747816880420904e-05, 2.3810862660315683e-05, 1.5873908440210452e-05, 7.936954220105226e-06, 3.174781688042091e-06, 1.5873908440210455e-06, 3.174781688042091e-07</resolutions>
+         </grid>
+   
+
+   <!--
+         there are three preconfigured grids you can use in <tileset>s without having to
+         explicitely define them here:
+         <grid name="WGS84">
+            <metadata>
+               <title>GoogleCRS84Quad</title>
+               <WellKnownScaleSet>urn:ogc:def:wkss:OGC:1.0:GoogleCRS84Quad</WellKnownScaleSet>
+            </metadata>
+            <extent>-180 -90 180 90</extent>
+            <srs>EPSG:4326</srs>
+            <units>dd</units>
+            <size>256 256</size>
+            <resolutions>1.40625000000000 0.703125000000000 0.351562500000000 0.175781250000000 8.78906250000000e-2 4.39453125000000e-2 2.19726562500000e-2 1.09863281250000e-2 5.49316406250000e-3 2.74658203125000e-3 1.37329101562500e-3 6.86645507812500e-4 3.43322753906250e-4 1.71661376953125e-4 8.58306884765625e-5 4.29153442382812e-5 2.14576721191406e-5 1.07288360595703e-5 5.36441802978516e-6</resolutions>
+         </grid>
+
+         <grid name="GoogleMapsCompatible">
+            <metadata>
+               <title>GoogleMapsCompatible</title>
+               <WellKnownScaleSet>urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible</WellKnownScaleSet>
+            </metadata>
+            <extent>-20037508.3427892480 -20037508.3427892480 20037508.3427892480 20037508.3427892480</extent>
+            <srs>EPSG:3857</srs>
+            <srsalias>EPSG:900913</srsalias>
+            <units>m</units>
+            <size>256 256</size>
+            <resolutions>156543.0339280410 78271.51696402048 39135.75848201023 19567.87924100512 9783.939620502561 4891.969810251280 2445.984905125640 1222.992452562820 611.4962262814100 305.7481131407048 152.8740565703525 76.43702828517624 38.21851414258813 19.10925707129406 9.554628535647032 4.777314267823516 2.388657133911758 1.194328566955879 0.5971642834779395</resolutions>
+         </grid>
+   --> 
+
+   <!-- this grid is identical to the previous one, except that it uses EPSG:900913 as the default srs as it is more supported -->
+   <!--
+        <grid name="g">
+            <metadata>
+               <title>GoogleMapsCompatible</title>
+               <WellKnownScaleSet>urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible</WellKnownScaleSet>
+            </metadata>
+            <extent>-20037508.3427892480,-20037508.3427892480,20037508.3427892480,20037508.3427892480</extent>
+            <srs>EPSG:900913</srs>
+            <srsalias>EPSG:3857</srsalias>
+            <size>256 256</size>
+            <resolutions>
+               156543.0339280410
+               78271.51696402048
+               39135.75848201023
+               19567.87924100512
+               9783.939620502561
+               4891.969810251280
+               2445.984905125640
+               1222.992452562820
+               611.4962262814100
+               305.7481131407048
+               152.8740565703525
+               76.43702828517624
+               38.21851414258813
+               19.10925707129406
+               9.554628535647032
+               4.777314267823516
+               2.388657133911758
+               1.194328566955879
+               0.5971642834779395
+            </resolutions>
+         </grid>
+   --> 
+
+   <!--
+        a cache is where tiles are stored once they have been rendered
+   -->
+   <cache name="disk" type="disk">
+
+      <!-- base
+           
+           absolute filesystem path where the tile structure will be stored.
+           this directory needs to be readable and writable by the user running
+           apache
+      -->
+      <base>/var/sig/tiles</base>
+
+      <!-- symlink_blank
+           
+           enable blank (i.e. uniform color) tile detection. blank tiles will be
+           detected at creation time and linked to a single blank tile on disk to
+           preserve disk space.
+      -->
+      <symlink_blank/>
+   </cache>
+
+
+   <!-- format
+
+        a format is an image algorithm used for compressing images
+        types can be "PNGQ_FAST" or "JPEG"
+   -->
+   <format name="PNGQ_FAST" type ="PNG">
+      
+      <!-- compression
+
+           png compression: best or fast
+           note that "best" compression is cpu intensive for little gain over the default
+           default compression is obtained by leving out this tag.
+      -->
+      <compression>fast</compression>
+
+      <!-- colors
+
+         if supplied, this enables png quantization which reduces the number of colors
+         in an image to atain higher compression. this operation is destructive, and can
+         cause artifacts in the stored image.
+         the number of colors can be between 2 and 256
+     -->
+     <colors>256</colors>
+   </format>
+   <format name="myjpeg" type ="JPEG">
+      <!-- quality
+
+           JPEG compression quality, ranging from 0 to 100
+           95 produces high quality images with few visual artifacts
+           values under around 80 produce small images but with visible artifacts.
+           YMMV
+      -->
+      <quality>75</quality>  
+
+      <photometric>RGB</photometric>   <!-- RGB | YCBCR -->
+   </format>
+    <format name="PNG_BEST" type ="PNG">
+      
+      <!-- compression
+
+           png compression: best or fast
+           note that "best" compression is cpu intensive for little gain over the default
+           default compression is obtained by leving out this tag.
+      -->
+      <compression>best</compression>
+
+      <!-- colors
+
+         if supplied, this enables png quantization which reduces the number of colors
+         in an image to atain higher compression. this operation is destructive, and can
+         cause artifacts in the stored image.
+         the number of colors can be between 2 and 256
+     -->
+   </format>
+
+   <!--
+   <source name="bluemarble" type="gdal">
+      <data>/gro2/data/bluemarble/bluemarble.vrt</data>
+   </source>
+   -->
+   <!-- source
+
+      the service to query for obtaining images if they are not in the cache
+      for now, type can only be "wms"
+   -->
+   <source name="Articulacao_Projeto_RAM" type="wms">
+      
+      <!-- getmap
+
+         extra parameters that will be added to the GetMap request. you can specify any
+         parameter here, e.g. VERSION if you want to override the version of the WMS
+         request.
+         the LAYERS parameter is mandatory.
+         usual parameters here are FORMAT , or MAP if using mapserver
+      -->
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>Articulacao_Projeto_RAM</LAYERS>
+         </params>
+      </getmap>
+      
+      <!-- http
+
+         http url and parameters that will be used when making WMS requests
+      -->
+      <http>
+         
+         <!-- url
+
+         url of the wms service, without any parameters
+         -->
+         <url>http://www.geoportal.eb.mil.br/ms</url>
+         
+         <!-- headers
+
+            http headers added to request. make sure you know what you are 
+            doing when adding a header here, as they take precedence over any
+            default headers curl will be adding to the request.
+            typical headers that can be added here are User-Agent and Referer.
+            
+            when adding a <key>value</key> element here, the request to the
+            wms source will contain the
+
+            key: value\r\n
+
+            HTTP header.
+         -->
+         <!--
+         <headers>
+            <User-Agent>mod-mapcache/r175</User-Agent>
+            <Referer>http://www.mysite.com?param=2&amp;par=4</Referer>
+         </headers>
+         -->
+
+         <!-- TODO other http parameters
+              * PROXY
+              * AUTH
+         -->
+
+         <!-- timeout in seconds before bailing out from a request if no connection was created -->
+         <connection_timeout>30</connection_timeout>
+         
+         <!-- timeout in seconds before bailing out from a request. This is the total time needed
+              to fullfill the request, and includes the time needed to transfer the response through
+              the network. Defaults to 600 seconds, set to a higher value if e.g. WMS requests for
+              large metatiles take longer than 10 minutes to render -->
+         <timeout>300</timeout>
+      </http>
+   </source>
+
+   <source name="ctmmultiescalas" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ctm25,ctm50,ctm100,ctm250</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/mapcache?TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="municipios" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>municipios</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/ms?TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+      <source name="estados" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>estados</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/ms?TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   <source name="capitais" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>capitais</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/ms?TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="ctm25s" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ctm</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/25/terraogcmed.cgi?service=WMS&version=1.1.0</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="ctm25tc" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ctm</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/25/terraogcmed.cgi?service=WMS&version=1.1.0</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+
+   <source name="ctm50" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ctm</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/50/terraogcmed.cgi?service=WMS&version=1.1.0</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>  
+
+   <source name="ctm50_beta" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ctm50med,ctm50op</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/mapcache2?service=WMS&version=1.1.0</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>   
+   
+   
+   <source name="ctm100" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ctm</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/100/terraogcmed.cgi?service=WMS&version=1.1.0</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+
+   <source name="ctm250" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ctm</LAYERS>
+	    <TRANSPARENT>TRUE</TRANSPARENT>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/250/terraogcmed.cgi?service=WMS&version=1.1.0</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="rapideye" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/jpeg</FORMAT>
+            <LAYERS>rapideye</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://10.67.5.94/cgi-bin/mapserv?map=/var/www/mapserver/rapideye/rapideye.map</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+
+   <source name="landsat7" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>landsat7</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/250/terraogcmed.cgi?version=1.1.0&TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="ram_mds" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ram_mds</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/50/terraogcmed.cgi?version=1.1.0&TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   
+   <source name="ram_colorimetria_50" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ram_colorimetria</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/50/terraogcmed.cgi?version=1.1.0&TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="ram_colorimetria_25" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>ram_colorimetria</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/25/terraogcmed.cgi?version=1.1.0&TRANSPARENT=TRUE</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+    <source name="basebrasil" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>basebrasil</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/ms</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="mds250" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>mds</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/250/terraogcmed.cgi?</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="ortoimagem_scn25" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png; mode=24bit</FORMAT>
+            <LAYERS>ortoimagem_scn</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/25/terraogcmed.cgi?</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="mds25" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>mds</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/25/terraogcmed.cgi?</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="curva_nivel25" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>Curva_Nivel</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/25/terraogcmed.cgi?</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="curva_nivel50" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>Curva_Nivel</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/50/terraogcmed.cgi?</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="curva_nivel100" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>Curva_Nivel</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/100/terraogcmed.cgi?</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <source name="curva_nivel250" type="wms">
+      <getmap>
+         <params>
+            <FORMAT>image/png</FORMAT>
+            <LAYERS>Curva_Nivel</LAYERS>
+         </params>
+      </getmap>
+      <http>
+         <url>http://www.geoportal.eb.mil.br/teogc/250/terraogcmed.cgi?</url>
+         <connection_timeout>30</connection_timeout>
+         <timeout>3000</timeout>
+      </http>
+   </source>
+   
+   <!-- tileset
+      a tileset regroups a <source>, <grid> and <cache>.
+      the "name" parameter is mandatory, and represents the key by which this tileset
+      will be requested by clients (e.g. in the WMS LAYERS parameter)
+   -->
+   <tileset name="test">
+
+      <!-- source: the "name" attribute of a preconfigured <source> -->
+      <source>Articulacao_Projeto_RAM</source>
+
+      <!-- cache: the "name" attribute of a preconfigured <cache> -->
+      <cache>disk</cache>
+
+      <!-- grid: the "name" attribute of a preconfigured <grid> 
+         you can also use the following notation to limit the area that will be cached and served to clients:
+         <grid restricted_extent="-10 40 10 50">WGS84</grid>
+         this way is better than using a grid with a limited extent, as in this way the tiles that are already
+         cached are not invalidated should you want to modify the restricted extent in the future. When using
+         the restricted_extent attribute, you should give the corresponding information to the client that will
+         be using the service.
+         you can also limit the zoom levels that are cached/accessible by using the minzoom, maxzoom attributes.
+
+
+         NOTE: when adding a <grid> element, you *MUST* make sure that the source you have selected is able to
+         return images in the grid's srs.
+      -->
+	 <grid>bdgex</grid>
+	 <!--<grid>WGS84</grid> restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+	 
+	 <!--<grid>g</grid>-->
+
+      <!-- metadata
+         optional metadata tags used for responding to GetCapabilities request.
+         you can put anything in here, although only the title and abstract tags
+         are currently used to populate the GetCapabilities document.
+      -->
+      <metadata>
+         <title>Articulacao_Projeto_RAM</title>
+         <abstract>Cartas Topográficas Matriciais do Sistema Cartográfico Nacional. Escala: 1:25.000.</abstract>
+      </metadata>
+
+      <!-- watermark
+
+         optional tag to add a watermark to the tiles *before* storing them to cache
+         the supplied image MUST be exactly the same size as the size of the tiles
+         configured in the <grid>
+         the supplied image is read when the configuration is loaded.
+         if you make changes to the image, they will NOT be reflected on tiles already
+         stored in the cache, nor on newly stored tiles until the server is restarted
+      <watermark>/home/tbonfort/dev/mod-mapcache/static/watermark.png</watermark>
+      -->
+      
+      <!-- format
+         (optional) format to use when storing a tile. this should be a format with high
+         compression, eg. png with compression "best", as the compression operation is only
+         done once at creation time.
+         if left out, no recompression is applied to the image, mod-mapcache will store the
+         exact image received from the <source>
+         note that the <format> tag is mandatory if metatile, metabuffer or watermark are
+         supplied, as in those cases a recompression has to be done.
+      -->
+      <format>PNGQ_FAST</format>
+
+      <!-- metatile
+         number of columns and rows to use for metatiling, see http://geowebcache.org/docs/current/concepts/metatiles.html
+      -->
+      <metatile>5 5</metatile>
+
+      <!-- metabuffer
+         area around the tile or metatile that will be cut off to prevent some edge artifacts.
+         if using this, the configured source must be instructed not to put any labels inside
+         this area, as otherwise this will result in truncated labels (for mapserver, this is
+         the "labelcache_map_edge_buffer" "-10" metadata entry, along with label PARTIALS FALSE
+      -->
+      <metabuffer>10</metabuffer>
+
+      <!-- expires
+         optional expiration value in seconds for a tile. this is expressed in a number of seconds
+         after the creation date of the tile
+         This is the value that will be set in the HTTP Expires and Cache-Control headers, and has
+         no effect on the actual expiration of tiles on the caches. See <auto_expire> for that.
+      -->
+
+
+      <!-- auto_expire
+         automatically re-request tiles and update the cache once they are older than the given number
+         of seconds after their creation.
+         Note that this will only delete tiles form the cache when they are accessed, you cannot
+         use this configuration to limit the size of the created cache.
+         Note that if set, this value overrides the value given by <expires>
+      -->
+      <auto_expire>86400</auto_expire>
+      
+      <!-- dimensions
+         optional dimensions that should be cached
+         the order of the <dimension> tags inside the <dimensions> is important as it is used
+         to create the directory structure for the disk cache. i.e. if you change the order of these
+         values, any tiles that have been previously cached are invalidated (but not removed from the 
+         cache, it's just they don't exist anymore for mod-mapcache
+      -->
+    </tileset>
+
+
+   
+<tileset name="ctm25">
+      <source>ctm25s</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ctm25</title>
+         <abstract>Cartas Topográficas Matriciais do Sistema Cartográfico Nacional. Escala: 1:25.000.</abstract>
+      </metadata>
+      <format>PNG_BEST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="ctm50">
+      <source>ctm50</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ctm50</title>
+         <abstract>Cartas Topográficas Matriciais do Sistema Cartográfico Nacional. Escala: 1:50.000.</abstract>
+      </metadata>
+      <format>PNG_BEST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="ctm50_beta">
+      <source>ctm50_beta</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ctm50_beta</title>
+         <abstract>Cartas Topográficas Matriciais do Sistema Cartográfico Nacional. Escala: 1:50.000.</abstract>
+      </metadata>
+      <format>PNG_BEST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+
+<tileset name="ctm100">
+      <source>ctm100</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ctm100</title>
+         <abstract>Cartas Topográficas Matriciais do Sistema Cartográfico Nacional. Escala: 1:100.000.</abstract>
+      </metadata>
+      <format>PNG_BEST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="ctm250">
+      <source>ctm250</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ctm250</title>
+         <abstract>Cartas Topográficas Matriciais do Sistema Cartográfico Nacional. Escala: 1:250.000.</abstract>
+      </metadata>
+      <format>PNG_BEST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="ctm">
+      <source>ctmmultiescalas</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ctm</title>
+         <abstract>Cartas Topográficas Matriciais do Sistema Cartográfico Nacional. Mosaico das escalas 1:25.000, 1:50.000, 1:100.000 e 1:250.000.</abstract>
+      </metadata>
+      <format>PNG_BEST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+
+<tileset name="rapideye">
+      <source>rapideye</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>rapideye</title>
+         <abstract>Imagens RapidEye do ano de 2013.</abstract>
+      </metadata>
+      <format>myjpeg</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="landsat7">
+      <source>landsat7</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>landsat7</title>
+         <abstract>Imagens LandSat do ano de 2000.</abstract>
+      </metadata>
+      <format>myjpeg</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="ram_mds">
+      <source>ram_mds</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ram_mds</title>
+         <abstract>Modelo digital de superfície oriundo de sensores orbitais ou aerotransportados.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+
+<tileset name="ram_colorimetria_50">
+      <source>ram_colorimetria_50</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ram_colorimetria_50</title>
+         <abstract>Imagens ortorretificadas de sensores orbitais ou aerotransportados (contém imagens sintéticas).</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="ram_colorimetria_25">
+      <source>ram_colorimetria_25</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ram_colorimetria_25</title>
+         <abstract>Imagens ortorretificadas de sensores orbitais ou aerotransportados (contém imagens sintéticas).</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="municipios">
+      <source>municipios</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>municipios</title>
+         <abstract>Municipios brasileiros. Escala 1:250.000.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="estados">
+      <source>estados</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>estados</title>
+         <abstract>Estados brasileiros. Escala 1:250.000.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="capitais">
+      <source>capitais</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>capitais</title>
+         <abstract>Capitais dos estados brasileiros.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="basebrasil">
+      <source>basebrasil</source>
+      <cache>disk</cache>
+	 <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>basebrasil</title>
+         <abstract>Mapa sombreado para navegação.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="basebrasil2">
+      <source>basebrasil</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>basebrasil</title>
+         <abstract>Mapa sombreado para navegação.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="mds250">
+      <source>mds250</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>mds250</title>
+         <abstract>Modelo digital de superfície oriundo da SRTM (250m).</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="ortoimagem_scn25">
+      <source>ortoimagem_scn25</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>ortoimagem_scn25</title>
+         <abstract>Imagens ortorretificadas de sensores orbitais ou aerotransportados (verdadeira cor).</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="mds25">
+      <source>mds25</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>mds25</title>
+         <abstract>Modelo digital de superfície oriundo de sensores orbitais ou aerotransportados.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="curva_nivel25">
+      <source>curva_nivel25</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>curva_nivel25</title>
+         <abstract>Curvas de nível do Sistema Cartográfico Nacional.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="curva_nivel50">
+      <source>curva_nivel50</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>curva_nivel50</title>
+         <abstract>Curvas de nível do Sistema Cartográfico Nacional.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="curva_nivel100">
+      <source>curva_nivel100</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>curva_nivel100</title>
+         <abstract>Curvas de nível do Sistema Cartográfico Nacional.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+<tileset name="curva_nivel250">
+      <source>curva_nivel250</source>
+      <cache>disk</cache>
+         <grid>bdgex</grid> <!--restricted_extent="-10 40 10 50" minzoom="6" maxzoom="8" -->
+      <metadata>
+         <title>curva_nivel250</title>
+         <abstract>Curvas de nível do Sistema Cartográfico Nacional.</abstract>
+      </metadata>
+      <format>PNGQ_FAST</format>
+      <metatile>1 1</metatile>
+      <metabuffer>1</metabuffer>
+
+</tileset>
+
+
+   <!-- default_format
+      format to use when a client asks for an image that is dynamically created from multiple
+      tiles from the cache.
+      note that using a png format with "best" compression is not recommended
+      here as it comes with a very compression overhead in terms of cpu processing. it is
+      recommended to use a png format with "fast"compression here, unless you have plenty
+      of server cpu power and or limited bandwidth
+   -->
+   <default_format>PNGQ_FAST</default_format>
+
+   <!-- services
+      services that will be responded to by mod-mapcache
+      each service is accessible at the url http://host/path/to/mapcache/{service},
+      eg http://myhost/mapcache/wms for OGC WMS.
+   -->
+   <service type="wms" enabled="true">
+      <!-- this service should actually be called "ogc". It is different from the other
+           services as it does not listen on the /wms endpoint, but directly on /.
+           It will intercept wms getmap requests that can be treated from configured
+           tilesets, and can optionally forward all the rest to (an)other server(s)
+           TODO: this needs way more documenting
+      <forwarding_rule name="foo rule">
+            <append_pathinfo>true</append_pathinfo>
+            <http>
+               <url>http://localhost/mapcacheproxy</url>
+            </http>
+      </forwarding_rule>
+      -->
+      <!-- full_wms
+           configure response to wms requests that are not aligned to a tileset's grids.
+           responding to requests that are not in the SRS of a configured grid is not supported, but
+           this should never happen as only the supported SRSs are publicized in the capabilities
+           document.
+
+           allowed values are:
+             - error: return a 404 error (default)
+             - assemble: build the full image by assembling the tiles from the cache
+             - forward: forward the request to the configured source.
+      -->
+      <full_wms>assemble</full_wms>
+      <!-- resample mode
+      filter applied when resampling tiles for full wms requests.
+      can be either:
+      - nearest : fastest, poor quality
+      - bilinear: slower, higher qulity
+      -->
+      <resample_mode>nearest</resample_mode>
+      
+      <!-- format
+         image format to use when assembling tiles
+      -->
+      <format>PNGQ_FAST</format>
+      <maxsize>4096</maxsize>
+
+   </service>
+   <service type="wmts" enabled="true"/>
+   <service type="tms" enabled="true"/>
+   <service type="kml" enabled="true"/>
+   <service type="gmaps" enabled="true"/>
+   <service type="ve" enabled="true"/>
+   <service type="demo" enabled="true"/>
+
+   <!-- errors
+        configure how error will be reported back to a client:
+          - log : no error is reported back, except an http error code.
+          - report : return the error message to the client in textual format
+          - empty_img : return an empty image to the client. the actual error code is in the X-Mapcache-Error http header
+          - report_img : return an image with the error text included inside. not implemented yet.
+
+        the default setting is to report the error message back to the user. In production, you might want to set this to "log"
+        if you're paranoid, or to "empty_img" if you want to play nice with non-conforming clients.
+   -->
+   <errors>report</errors>
+
+   
+   <!--
+        location to put lockfiles (to block other clients while a metatile is being rendered.
+        defaults to /tmp
+        this location should be writable by the apache user
+   -->
+   <lock_dir>/var/sig/tiles</lock_dir>
+
+   <!-- use multiple threads when fetching multiple tiles (used for wms tile assembling -->
+   <threaded_fetching>true</threaded_fetching>
+   
+   
+   <!-- fastcgi only -->
+   <log_level>info</log_level> <!-- logging verbosity -->
+   <auto_reload>true</auto_reload> <!-- auto reload if config file changed -->
+
+</mapcache>

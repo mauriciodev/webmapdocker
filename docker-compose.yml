@@ -1,0 +1,91 @@
+version: '3.3'
+services:
+    nginx: #Reverse proxy: provides an external URL for the containers. This is the MAIN entry point that actually responds on port 80.
+        container_name: nginx
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - '${PWD}/configs/nginx_reverse_proxy.conf:/etc/nginx/conf.d/default.conf:ro'
+            #- '/var/run/docker.sock:/tmp/docker.sock:ro'
+            #- '/etc/apache2/ssl:/etc/nginx/certs'
+        restart: always
+        logging:
+            options:
+                max-size: 1g
+        image: nginx
+        depends_on: # NGINX will not run if the containers of the reverse proxy are not running.
+            - mapserver
+            - mapcache
+            - pycsw
+
+    pycsw: #Catalogue Service for the Web (CSW)
+        container_name: pycsw
+        #ports:
+            #- '8088:8000'
+        volumes:
+            - '${PWD}/configs/pycsw.cfg:/etc/pycsw/pycsw.cfg:ro'
+            - '${PWD}/logs/pycsw/:/var/log/pycsw/'
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: test
+            POSTGRES_USER: postgres
+            PYCSW_SERVER_URL: http://localhost:8000
+        logging:
+            options:
+                max-size: 1g
+        image: geopython/pycsw
+
+            
+    mapserver: #Web Map Service (WMS), Web Feature Service (WFS), Web Coverage Service (WCS)
+        container_name: mapserver
+        #ports:
+            #- '8087:80'
+        volumes:
+            - '${PWD}/mapserver/:/etc/mapserver/:ro'
+            - '${PWD}/geodata/:/geodata/:ro'
+            - '${PWD}/logs/mapserver:/home/mapserver.log'
+        environment:
+            MS_ERRORFILE: "/home/mapserver.log"
+            LISTEN_PORT_80: 1
+        restart: always
+        logging:
+            options:
+                max-size: 1g
+        image: camptocamp/mapserver
+
+    mapcache: #Cached services (raster and vector tiles)
+        container_name: mapcache
+        #ports:
+        #    - '8089:80'
+        volumes:
+            - '${PWD}/data/mapcache_tmp:/var/sig/tiles'
+            - '${PWD}/configs/mapcache.xml:/etc/mapcache/mapcache.xml:ro'
+        restart: always
+        logging:
+            options:
+                max-size: 1g
+        image: camptocamp/mapcache
+        depends_on:
+            - mapserver
+
+    postgis: #Spatial database
+        container_name: postgis
+        restart: always
+        ports:
+            - '5432:5432'
+        volumes:
+            - '${PWD}/data/postgres:/var/lib/postgresql/data'
+            - '${PWD}/logs/postgres:/var/log/postgresql/'
+            - '${PWD}/configs/create_databases.sh:/docker-entrypoint-initdb.d/create_databases.sh'
+        logging:
+            options:
+                max-size: 1g
+        environment:
+            POSTGRES_PASSWORD: test
+            POSTGRES_USER: postgres
+            PGDATESTYLE: "ISO, DMY"
+            PGDATA: /var/lib/postgresql/data
+        image: postgis/postgis
+        command: ["postgres"] #, "-c", "logging_collector=on", "-c", "log_statement=none", "-c", "log_directory=/var/log/postgresql/"
+            
