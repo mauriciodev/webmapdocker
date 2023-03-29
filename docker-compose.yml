@@ -44,9 +44,9 @@ services:
         volumes:
             - '${PWD}/mapserver/:/etc/mapserver/:ro'
             - '${PWD}/geodata/:/geodata/:ro'
-            - '${PWD}/logs/mapserver:/home/mapserver.log'
+            #- '${PWD}/logs/mapserver:/home/mapserver.log'
         environment:
-            MS_ERRORFILE: "/home/mapserver.log"
+            #MS_ERRORFILE: "/home/mapserver.log"
             LISTEN_PORT_80: 1
         restart: always
         logging:

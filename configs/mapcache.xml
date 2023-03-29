@@ -195,7 +195,7 @@
          </params>
       </getmap>
       <http>
-         <url>http://localhost/ms?map=/etc/mapserver/teste.map</url>
+         <url>http://mapserver?map=/etc/mapserver/teste.map</url>
          <connection_timeout>30</connection_timeout>
          <timeout>3000</timeout>
       </http>
