@@ -90,9 +90,25 @@ services:
         command: ["postgres"] #, "-c", "logging_collector=on", "-c", "log_statement=none", "-c", "log_directory=/var/log/postgresql/"
             
 
-    fonte:
+    mdmanager:
+        container_name: mdmanager
         build:
             context: metadatamanager
             target: builder
         ports:
             - '8000:8000'
+        #command: gunicorn metadatamanager.wsgi:application --bind 0.0.0.0:8000
+        #env_file:
+        #    - ./metadatamanager/env.dev
+        environment:
+            DEBUG: 1
+            SECRET_KEY: foo
+            DJANGO_ALLOWED_HOSTS: localhost 127.0.0.1 [::1]
+            SQL_ENGINE: django.db.backends.postgresql
+            SQL_DATABASE: pycsw #configured on pycsw.cfg
+            SQL_USER: postgres #use postgres variables on SQL
+            SQL_PASSWORD: test #use postgres variables on SQL
+            SQL_HOST: postgis #use postgres variables on SQL
+            SQL_PORT: 5432 #use postgres variables on SQL
+        depends_on:
+            - postgis
