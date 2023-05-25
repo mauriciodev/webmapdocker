@@ -1,1 +1,6 @@
 /mapserver/mapserver/*
+*/__pycache__/*
+*/migrations*
+/metadatamanager/mdmanager/migrations/*
+/metadatamanager/metadatamanager/__pycache__/*
+/metadatamanager/mdmanager/__pycache__/*
