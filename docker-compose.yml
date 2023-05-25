@@ -92,7 +92,7 @@ services:
 
     fonte:
         build:
-        context: bdgex_fonte
-        target: builder
+            context: metadatamanager
+            target: builder
         ports:
             - '8000:8000'

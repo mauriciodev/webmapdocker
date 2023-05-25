@@ -1,11 +1,11 @@
 # syntax=docker/dockerfile:1.4
 
-FROM --platform=$BUILDPLATFORM python:3.7-alpine AS builder
+FROM --platform=$BUILDPLATFORM python:alpine3.17 AS builder
 EXPOSE 8000
-WORKDIR /bdgex_fonte
-COPY requirements.txt /bdgex_fonte
+WORKDIR /app
+COPY requirements.txt /app
 RUN pip3 install -r requirements.txt --no-cache-dir
-COPY . /bdgex_fonte
+COPY . /app
 ENTRYPOINT ["python3"] 
 CMD ["manage.py", "runserver", "0.0.0.0:8000"]
 
