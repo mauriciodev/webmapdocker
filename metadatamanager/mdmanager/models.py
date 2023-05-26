@@ -2,15 +2,7 @@ from django.db import models
 import uuid
 # Create your models here.
 
-class metadata(models.Model):
-    fileIdentifier = models.UUIDField(
-         default = uuid.uuid4,
-         editable = True)
-    title = models.TextField(blank=False)
-    xml = models.TextField(blank=False)
 
-    def __str__(self):
-         return f"{self.title} {self.fileIdentifier}"
 
 
 class Records(models.Model):
@@ -80,8 +72,73 @@ class Records(models.Model):
     bands = models.TextField(blank=True, null=True)
     links = models.TextField(blank=True, null=True)
     contacts = models.TextField(blank=True, null=True)
-    anytext_tsvector = models.TextField(blank=True, null=True)  # This field type is a guess.
-    wkb_geometry = models.TextField(blank=True, null=True)  # This field type is a guess.
+    # anytext_tsvector = models.TextField(blank=True, null=True)  # This field type is a guess.
+    # wkb_geometry = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
+        managed = False
         db_table = 'records'
+
+
+from owslib.csw import CatalogueServiceWeb
+from metadatamanager import settings
+
+class product(models.Model):
+    #fileIdentifier = models.UUIDField(
+         #default = uuid.uuid4,
+         #editable = True)
+    xmlFile = models.FileField(upload_to="metadata")
+    dataFile = models.FileField(upload_to="data")
+    csw_record = models.OneToOneField(
+        Records,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
+
+
+    def __str__(self):
+        return f"{self.xmlFile} {self.csw_record}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+        self.CSW_add()
+
+
+    """Adds the current product to the csw server or csw queue."""
+    def CSW_add(self):
+        #import to PyCSW
+        pass
+        #csw = CatalogueServiceWeb(settings.CSW_server)
+        #use the uuid to link products to records
+        #csw.transaction(ttype='insert', typename='gmd:MD_Metadata', record=open(self.xmlFile.path).read().encode())
+
+    """Deletes the current product from the csw server."""
+    def CSW_delete(self):
+        pass
+
+    """Updates the current product from the csw server."""
+    def CSW_update(self):
+        pass
+
+    """Adds the current product to the WMS/WFS server."""
+    def Geo_add(self):
+        pass
+
+    """Deletes the current product from the WMS/WFS server."""
+    def Geo_delete(self):
+        pass
+
+    """Updates the current product on the WMS/WFS server."""
+    def Geo_update(self):
+        pass
+
+
+#from django.db.models.signals import post_save
+#from django.dispatch import receiver
+
+#@receiver(post_save, sender=product)
+#def my_handler(sender, **kwargs):
+    #sender.CSW_add()
+#    print('post save callback')
+

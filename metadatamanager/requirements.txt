@@ -2,3 +2,4 @@ Django==3.*
 psycopg2-binary>=2
 django-moderation
 gunicorn
+owslib

@@ -9,9 +9,9 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 	CREATE DATABASE geo250 TEMPLATE template_postgis;
 EOSQL
 
-
-docker-compose run mdmanager python manage.py collectstatic
-docker-compose run mdmanager python manage.py makemigrations
-docker-compose run mdmanager python manage.py makemigrations mdmanager
-docker-compose run mdmanager python manage.py migrate
-docker-compose run mdmanager python manage.py createsuperuser --username mauricio
+docker-compose up -d mdmanager
+# docker-compose exec mdmanager python manage.py collectstatic
+docker-compose exec mdmanager python manage.py makemigrations mdmanager
+docker-compose exec mdmanager python manage.py migrate
+# docker-compose exec mdmanager python manage.py createsuperuser --username mauricio
+docker-compose stop mdmanager

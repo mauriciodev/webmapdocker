@@ -30,11 +30,13 @@ services:
         environment:
             POSTGRES_PASSWORD: test
             POSTGRES_USER: postgres
-            PYCSW_SERVER_URL: http://localhost:8000
+            PYCSW_SERVER_URL: http://pycsw:8000 #http://localhost/
         logging:
             options:
                 max-size: 1g
         image: geopython/pycsw
+        depends_on:
+            - postgis
 
             
     mapserver: #Web Map Service (WMS), Web Feature Service (WFS), Web Coverage Service (WCS)
@@ -110,5 +112,7 @@ services:
             SQL_PASSWORD: test #use postgres variables on SQL
             SQL_HOST: postgis #use postgres variables on SQL
             SQL_PORT: 5432 #use postgres variables on SQL
+            CSW_server: http://pycsw:8000
         depends_on:
             - postgis
+            - pycsw
