@@ -89,3 +89,15 @@ services:
         image: postgis/postgis
         command: ["postgres"] #, "-c", "logging_collector=on", "-c", "log_statement=none", "-c", "log_directory=/var/log/postgresql/"
             
+    webmapclient:
+        image: "node:20"
+        container_name: webmapclient
+        user: "node"
+        working_dir: /home/node/app
+        environment:
+        - NODE_ENV=production
+        volumes:
+        - ./webmapclient:/home/node/app
+        command: "npm start"
+        ports:
+            - '8001:8001'
