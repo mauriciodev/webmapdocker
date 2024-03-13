@@ -8,7 +8,8 @@
   },
   "devDependencies": {
     "ol": "^8.1.0",
-    "vite": "^4.0.4"
+    "vite": "^4.0.4",
+    "ol-mapbox-style": "^11.0.1"
   },
   "dependencies": {
     "vite": "^4.0.4"

@@ -25,9 +25,10 @@ MAP
   WEB
   METADATA
     "wms_title"           "WMS Demo Server"
-    "wms_onlineresource"  "http://my.host.com/cgi-bin/mapserv?map=wms.map&"
+    "wms_onlineresource"  "http://localhost/ms?MAP=/etc/mapserver/teste.map" # http://localhost/ms
     "wms_srs"             "EPSG:4326"
     "wms_enable_request" "*"
+    "ows_enable_request" "*"
   END
 END
 
@@ -42,6 +43,7 @@ LAYER
     NAME cities
     METADATA
       "wms_title"    "Cities"  ##required
+      "wms_extent"   "-180.5 -65.5 180.5 76.5"
     END
     TYPE POINT
     STATUS ON
@@ -60,5 +62,232 @@ LAYER
       END # Style
     END # Class
   END # Layer
+
+LAYER
+    NAME hid_banco_areia_a
+    METADATA
+        "wms_title"   "Bancos de Areia A"
+        "wms_extent"  "-70.0 -31.0 -34.8 3.6"
+        "wms_srs"     "EPSG:4326"
+    END
+    TYPE POLYGON
+    STATUS ON
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "host=postgis dbname=geo50 user=postgres password=test port=5432"
+    DATA "geom FROM hid_banco_areia_a USING UNIQUE id USING srid=4674"
+    #EXTENT -70.0 -31.0 -34.8 3.6
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    PROJECTION
+      "init=epsg:4674"
+    END
+    CLASS
+      NAME "Bancos de Areia A"
+      STYLE
+         COLOR 0 170 255
+         OUTLINECOLOR 0 0 0
+      END # Style
+    END # Class
+  END # Layer
+
+LAYER
+    NAME hid_trecho_drenagem_l
+    METADATA
+        "wms_title"   "HID_Trecho_Drenagem_L"
+        "wms_extent"  "-51.5000002 -30.5000255 -51.0000002 -30.0000034"
+        "wms_srs"     "EPSG:4326 EPSG:900913"
+    END
+    TYPE LINE
+    STATUS ON
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "host=postgis dbname=geo100 user=postgres password=test port=5432"
+    DATA "geom FROM \"HID_Trecho_Drenagem_L\" USING UNIQUE id USING srid=4674"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    PROJECTION
+      "init=epsg:4674"
+    END
+    CLASS
+      NAME "Bancos de Areia A"
+      STYLE
+         COLOR 0 0 255
+         WIDTH 3.0
+      END # Style
+    END # Class
+  END # Layer
+
+LAYER
+    NAME trecho_drenagem_l
+    METADATA
+        "wms_title"   "Trecho_Drenagem_L"
+        "wms_extent"  "-52.041928 -31.046298 -49.900822 -28.944836"
+        "wms_srs"     "EPSG:4326 EPSG:900913"
+        "gml_include_items" "all"
+    END
+    TYPE LINE
+    STATUS ON
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "host=postgis dbname=multiescala user=postgres password=test port=5432"
+    DATA "geom FROM \"Trecho_Drenagem_L\" USING UNIQUE id USING srid=4326"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASS
+      EXPRESSION (('[regime]' eq 'Permanente') and ([minusablelevel]>=5000000))
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 1
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' ne 'Permanente') and ([minusablelevel]>=5000000))
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 0.7
+        PATTERN 3.0 2.0 END
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' eq 'Permanente') and ([minusablelevel]>=1000000))
+      MAXSCALEDENOM 1000000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 1
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' ne 'Permanente') and ([minusablelevel]>=1000000))
+      MAXSCALEDENOM 1000000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 0.7
+        PATTERN 3.0 2.0 END
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' eq 'Permanente') and ([minusablelevel]>=500000))
+      MAXSCALEDENOM 500000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 1
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' ne 'Permanente') and ([minusablelevel]>=500000))
+      MAXSCALEDENOM 500000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 0.7
+        PATTERN 3.0 2.0 END
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' eq 'Permanente') and ([minusablelevel]>=100000))
+      MAXSCALEDENOM 200000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 1
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' ne 'Permanente') and ([minusablelevel]>=100000))
+      MAXSCALEDENOM 200000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 0.7
+        PATTERN 3.0 2.0 END
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' eq 'Permanente') and ([minusablelevel]>=50000))
+      MAXSCALEDENOM 50000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 1
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION (('[regime]' ne 'Permanente') and ([minusablelevel]>=50000))
+      MAXSCALEDENOM 50000
+      STYLE
+        COLOR "#1089f9"
+        WIDTH 0.7
+        PATTERN 3.0 2.0 END
+      END # STYLE
+    END # CLASS
+  END # Layer
+
+LAYER
+    NAME massa_dagua_a
+    METADATA
+        "wms_title"   "Massa Dagua A"
+        "wms_extent"  "-52.0262370 -31.2500000 -49.5004390 -29.0208540"
+        "wms_srs"     "EPSG:4326 EPSG:900913"
+        "gml_include_items" "all"
+    END
+    TYPE POLYGON
+    STATUS ON
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "host=postgis dbname=multiescala user=postgres password=test port=5432"
+    DATA "geom FROM \"Massa_Dagua_A\" USING UNIQUE id USING srid=4326"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASS
+      EXPRESSION ([minusablelevel]>250000)
+      STYLE
+        COLOR 20 20 200
+        OUTLINECOLOR  '#1089f9'
+        OUTLINEWIDTH 1
+      END # STYLE
+    END # CLASS
+    CLASS
+      EXPRESSION ([minusablelevel]<=250000)
+      MAXSCALEDENOM 250000
+      STYLE
+        COLOR '#1089f9'
+        OUTLINECOLOR  '#1089f9'
+        OUTLINEWIDTH 1
+      END # STYLE
+    END # CLASS
+  END # Layer
+
+LAYER
+    NAME trecho_massa_dagua_a
+    METADATA
+        "wms_title"   "Trecho Massa Dagua A"
+        "wms_extent"  "-52.0262370 -31.2500000 -49.5004390 -29.0208540"
+        "wms_srs"     "EPSG:4326 EPSG:900913"
+        "gml_include_items" "all"
+    END
+    TYPE POLYGON
+    STATUS ON
+    CONNECTIONTYPE POSTGIS
+    CONNECTION "host=postgis dbname=multiescala user=postgres password=test port=5432"
+    DATA "geom FROM \"Trecho_Massa_Dagua_A\" USING UNIQUE id USING srid=4326"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    PROJECTION
+      "init=epsg:4326"
+    END
+CLASS
+  EXPRESSION ([minusablelevel]>250000)
+  STYLE
+    COLOR '#1089f9'
+    OUTLINECOLOR  '#1089f9'
+    OUTLINEWIDTH 1
+  END # STYLE
+END # CLASS
+CLASS
+  EXPRESSION ([minusablelevel]<=250000)
+  MAXSCALEDENOM 250000
+  STYLE
+    COLOR '#1089f9'
+    OUTLINECOLOR  '#1089f9'
+    OUTLINEWIDTH 1
+  END # STYLE
+END # CLASS
+  END # Layer
+
+
 
 END # All map files must come to an end just as all other things must come to... 
